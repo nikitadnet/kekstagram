@@ -76,4 +76,35 @@ var pictureBlock = document.querySelector('.pictures');
 pictureBlock.appendChild(pictureFragment);
 
 
+var renderBigPicture = function () {
+    bigPictureBlock.classList.remove('hidden');
+    bigPictureBlock.querySelector('.big-picture__img').querySelector('img').setAttribute('src', data[0].url);
+    bigPictureBlock.querySelector('.likes-count').textContent = data[0].likes;
+    bigPictureBlock.querySelector('.comments-count').textContent = 1;
+    return bigPictureBlock;
+};
 
+renderBigPicture();
+
+var bigPictureRenderComments = function () {
+    comments[0].querySelector('.social__text').textContent = data[0].comments[0].message;
+    comments[0].querySelector('img').setAttribute('src', data[0].comments[0].avatar);
+    comments[1].querySelector('.social__text').textContent = data[1].comments[0].message;
+    comments[1].querySelector('img').setAttribute('src', data[1].comments[0].avatar);
+    return comments;
+};
+
+bigPictureRenderComments();
+
+var bigPictureRenderDescription = function () {
+    bigPictureBlock.querySelector('.social__caption').textContent = data[0].description;
+};
+
+bigPictureRenderDescription();
+
+var visuallyHiddenElements = function () {
+    bigPictureBlock.querySelector('.social__comment-count').classList.add('visually-hidden');
+    bigPictureBlock.querySelector('.comments-loader').classList.add('visually-hidden');
+};
+
+visuallyHiddenElements();
