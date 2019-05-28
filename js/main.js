@@ -26,4 +26,54 @@ var descriptions = [
     "Вот это тачка!"
 ];
 
+var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+var bigPictureBlock = document.querySelector('.big-picture');
+var comments = bigPictureBlock.querySelector('.social__comments').children;
+
+var getRandomNumber = function (min, max) {
+    return Math.floor(min + Math.random() * (max + 1 - min));
+};
+
+var setData = function (comments, names) {
+    var photos = [];
+    var photo = {};
+
+    for (var i = 0; i < 25; i++) {
+        photo = {
+            url: "photos/" + getRandomNumber(1, 25) + ".jpg",
+            likes: getRandomNumber(15, 200),
+            comments: [
+                {
+                    avatar: "img/avatar-" + getRandomNumber(1, 6) + ".svg",
+                    message: comments[getRandomNumber(0, comments.length - 1)] + " " + comments[getRandomNumber(0, comments.length - 1)],
+                    name: names[getRandomNumber(0, names.length - 1)]
+                }
+            ],
+            description: descriptions[getRandomNumber(0, descriptions.length - 1)]
+        }
+        photos.push(photo);
+    }
+    return photos;
+};
+
+var data = setData(usersComments, usersNames);
+
+
+var renderPictureMiniatures = function (picture) {
+    var pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').setAttribute('src', picture.url);
+    pictureElement.querySelector('.picture__likes').textContent = picture.likes;
+    pictureElement.querySelector('.picture__comments').textContent = 1;
+    return pictureElement;
+};
+
+var pictureFragment = document.createDocumentFragment();
+for (var i = 0; i < 25; i++) {
+    pictureFragment.appendChild(renderPictureMiniatures(data[i]));
+}
+
+var pictureBlock = document.querySelector('.pictures');
+pictureBlock.appendChild(pictureFragment);
+
+
 
